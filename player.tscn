@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmhmofkc121yp"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_ucvld"]
+
+[sub_resource type="Gradient" id="Gradient_12vxo"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_t6fcl"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yeqhg"]
+color_ramp = SubResource("Gradient_12vxo")
+noise = SubResource("FastNoiseLite_t6fcl")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_emfjy"]
+noise_type = 2
+seed = -2
+frequency = 0.0357
+fractal_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_am2gu"]
+noise = SubResource("FastNoiseLite_emfjy")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_swfxh"]
+albedo_color = Color(1, 0, 0, 1)
+albedo_texture = SubResource("NoiseTexture2D_yeqhg")
+metallic = 0.5
+metallic_texture = SubResource("NoiseTexture2D_am2gu")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ul5tm"]
+material = SubResource("StandardMaterial3D_swfxh")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qntct"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_ucvld")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ul5tm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_qntct")
+
+[node name="Camera_Controller" type="Node3D" parent="."]
+top_level = true
+
+[node name="Camera_Target" type="Node3D" parent="Camera_Controller"]
+transform = Transform3D(1, 0, 0, 0, 0.829866, 0.557962, 0, -0.557962, 0.829866, -2.38419e-07, 2.43351, 2.64093)
+
+[node name="Camera3D" type="Camera3D" parent="Camera_Controller/Camera_Target"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, -0.556989, -0.257495)
